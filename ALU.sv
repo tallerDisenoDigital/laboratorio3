@@ -48,7 +48,7 @@ module ALU #(parameter bus_size = 8, shamt_p = 3) (input logic[bus_size-1:0] a, 
 		// definiciones de la funciones aritmeticas
 		// el bloque complemento 2: note que cout se conecta con el cin del adder para sumarle 1 ya que el complemento a 2
 		// realiza la negacion de la entrada
-		parameterizable_2_complement #(bus_size) (b, enable, c2_out,cout);
+		parameterizable_2_complement #(bus_size) comp_2(b, enable, c2_out,cout);
 		parameterizable_adder #(bus_size) sum(a, c2_out, cout, sumador, carryout);
 		
 		 
@@ -56,10 +56,10 @@ module ALU #(parameter bus_size = 8, shamt_p = 3) (input logic[bus_size-1:0] a, 
 		
 		
 		parameterizable_shift_left  #(bus_size,shamt_p) shift_l(a, shamt, shift_izquierdo);
-		parameterizable_shift_right  #(bus_size,shamt_p) shift_r(a, shamt, shift_right);
+		parameterizable_shift_right  #(bus_size,shamt_p) shift_r(a, shamt, shift_derecho);
 		
 		//asignacion de las entradas del mux
 		
-		mux_8 #(bus_size) my_selector(sumador, restador, shift_izquierdo, shift_derecho,my_or,my_and,my_xor,my_not,select,s);
+		mux_8 #(bus_size) my_selector(sumador, sumador, shift_izquierdo, shift_derecho,my_or,my_and,my_xor,my_not,select,s);
 		
 endmodule
