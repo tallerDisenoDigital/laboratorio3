@@ -19,7 +19,7 @@ module ALU #(parameter bus_size = 8, shamt_p = 3) (input logic[bus_size-1:0] a, 
 		//suma_o_resta verifica si la funcion insertada es una suma o una resta
 		logic suma_o_resta;
 		//esto se define para las dos primeras patillas del mux.
-		assign sumador = restador;
+		//assign sumador = restador;
 		//flag_zero está en alto si todos los bits de s son cero.
 		assign flag_zero = &(~s);
 		//Enable (activa el bloque complemento a 2) se activa cuando la funcion es resta.
