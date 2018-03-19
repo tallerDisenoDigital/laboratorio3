@@ -1,7 +1,9 @@
-module one_bit_full_adder (input logic a,b,cin, output logic s,cout);
+module one_bit_full_adder
+	(input logic a,b,cin,
+		output logic s,cout);
 
-	assign s = (a ^ b)^cin;
+	assign s = (a ^ b) ^ cin;
 	
-	assign cout = (a&b) | (cin & (a ^ b));
+	assign cout = (a & b) | (cin & (a ^ b));
 
 endmodule

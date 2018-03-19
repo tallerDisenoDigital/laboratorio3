@@ -1,138 +1,171 @@
-module ALUtb();
+`timescale 1ns / 1ns
 
-	logic[7:0] a, b;
-	logic[3:0]select;
+module ALUtb #(parameter bus_size = 4, shamt_bus_size=2); 	
+	
+	logic[bus_size-1:0] a, b;
+	logic[2:0]select;
 	//para el shamt se usa un valor extra en el logic para que en la simulacion el numero sea sin signo
-	logic[3:0]shamt;
-	logic[7:0] s;
+	logic[shamt_bus_size:0]shamt;
+	logic[bus_size-1:0] s;
 	logic flag_overflow, flag_zero, flag_negative, flag_carry_out;
 
-	ALU #(8,3) alu(a, b, select[2:0], shamt[2:0], s, flag_overflow, flag_zero, flag_negative, flag_carry_out);
+	ALU #(bus_size,shamt_bus_size) alu(a, b, select[2:0], shamt[shamt_bus_size:0], s,
+													flag_overflow, flag_zero, flag_negative, flag_carry_out);
 
 	//Lista de funciones									
 	//000 suma, 001 restador, 010 shift izquierdo, 011 shift derecho
 	//100 or, 101 and, 110 xor, 111 not
 	
-	initial begin
+	initial begin	
+	
+	shamt = 0;
+	
+	// Suma
 	select = 0;
-	//Suma
+	
+	a = 15;
+	b = 0;
+	#10
+	//assert (s===1) $info("=)"); else $error("15 + 0 = 15. Failed");
 	
 	a = 8;
 	b = 4;
-	shamt = 0;
+	#10;
+	
+	a = 0;
+	b = 15;
 	#10
 	
-	a = 8;
-	b = 54;
+	b = 10;
 	#10
-	
-	
-	a = 8;
-	b = 41;
-	#10
-	
-	b = 42;
-	#10
-	
-	b = 40;
-	#10
-	
-	b = 39;
-	#10
-	
-	
-	
+
+	// Resta
 	select = 1;
-	//Resta
+
+	a = 15;
+	b = 1;
 	#10
-	
-	a = 50;
-	b = 25;
-	#10
-	
-	
-	a = 38;
+
+	a = 2;
 	b = 12;
 	#10
-	
-	
-	a = 84;
-	b = 124;
+
+	a = 1;
+	b = 1;
 	#10
 	
+	a = 15;
+	b = 0;
+	#10
+	
+	// Shift left
 	select = 2;
-	//Shift left
+	
 	a = 8;
 	shamt = 2;
 	#10
-	
-	a = 125;
-	shamt = 5;
-	#10
-	
-	a = 74;
-	shamt = 4;
-	#10
-	
-	select = 3;
-	//Shift right
-	a = 8;
-	shamt = 2;
-	#10
-	
-	a = 125;
-	shamt = 5;
-	#10
-	
-	a = 74;
-	shamt = 4;
-	#10
-	
-	a = -84;
+
+	a = 15;
 	shamt = 3;
 	#10
 	
+	a = 8;
+	shamt = 1;
+	#10
 	
+	a = 1;
+	shamt = 2;
+	#10
+
+	// Shift right
+	select = 3;
 	
+	a = 8;
+	shamt = 3;
+	#10
+	
+	a = 1;
+	shamt = 1;
+	#10
+	
+	a = 4;
+	shamt = 2;
+	#10
+	
+	a = 15;
+	shamt = 3;
+	#10
+
+	// or
 	select = 4;
-	//or
-	a = 57;
-	b = 84;
+	
+	a = 10;
+	b = 5;
 	#10
 	
-	a = 31;
-	b = 14;
+	a = 0;
+	b = 10;
 	#10
 	
+	a = 15;
+	b = 0;
+	#10
 	
+	a = 15;
+	b = 15;
+	#10
+
+	// and
 	select = 5;
-	//and
 	
-	a = 124;
-	b = 48;
+	a = 0;
+	b = 0;
 	#10
 	
-	a = 74;
-	b = 99;
+	a = 15;
+	b = 15;
 	#10
 	
+	a = 10;
+	b = 5;
+	#10
 	
+	a = 10;
+	b = 1;
+	#10
+	
+	// xor
 	select = 6;
-	//xor
-	a = 76;
-	b = 48;
+	
+	a = 5;
+	b = 10;
 	#10
 	
-	a = 85;
-	b = 11;
+	a = 15;
+	b = 15;
 	#10
 	
+	a = 0;
+	b = 15;
+	#10
+	
+	a = 0;
+	b = 0;
+	#10
+
+	// not
 	select = 7;
-	//not
-	a = 74;
+	
+	a = 15;
 	#10
 	
-	a = 111;
+	a = 10;
+	#10
+	
+	a = 5;
+	#10
+	
+	a = 0;
 	#10;
 	
 	end
@@ -167,13 +200,8 @@ module ALUtb();
 		select = 6;
 		#10
 		select = 7;
-		#10;
-		
-		
-		
-		
+		#10;		
 	end;
 	*/
 	
-endmodule
-
+endmodule 
