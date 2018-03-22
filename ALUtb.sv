@@ -19,43 +19,45 @@ module ALUtb #(parameter bus_size = 4, shamt_bus_size=2);
 	initial begin	
 	
 	shamt = 0;
+	b = 0;
 	
 	// Suma
 	select = 0;
 	
-	a = 15;
+	a = 10;
 	b = 0;
 	#10
-	//assert (s===1) $info("=)"); else $error("15 + 0 = 15. Failed");
+	assert (s===4'b1010) $info("=)"); else $error("15 + 0 = 15. Failed");
 	
 	a = 8;
 	b = 4;
 	#10;
 	
-	a = 0;
-	b = 15;
+	a = 3;
+	b = 2;
 	#10
 	
-	b = 10;
+	a = 7;
+	b = 1;
 	#10
 
 	// Resta
 	select = 1;
 
-	a = 15;
+	a = 7;
 	b = 1;
 	#10
 
 	a = 2;
-	b = 12;
+	b = 1;
 	#10
 
-	a = 1;
-	b = 1;
+	a = 5;
+	b = 3;
 	#10
 	
 	a = 15;
-	b = 0;
+	b = 1;
 	#10
 	
 	// Shift left
